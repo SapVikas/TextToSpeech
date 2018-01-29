@@ -1,18 +1,17 @@
 package com.sap.texttospeech;
-
-
 import android.Manifest;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -21,11 +20,10 @@ import android.widget.EditText;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 101;
     EditText editText;
     String s;
-    Button go;
 
 
     @Override
@@ -36,8 +34,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         checkPermission();
 
         editText = findViewById(R.id.editText);
-        go = findViewById(R.id.button2);
-        go.setOnClickListener(this);
 
         final SpeechRecognizer mSpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
 
@@ -140,8 +136,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
                 startActivity(i);
+            }   else if (s.equals("open twitter")) {
+                String url = "https://www.twitter.com";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
             }
-
+            else if (s.equals("open chrome")) {
+                PackageManager pm = getApplicationContext().getPackageManager();
+                Intent appStartIntent = pm.getLaunchIntentForPackage("com.android.chrome");
+                if (null != appStartIntent)
+                {
+                    getApplicationContext().startActivity(appStartIntent);
+                }
+            }
+            else if (s.equals("open google chrome")) {
+                PackageManager pm = getApplicationContext().getPackageManager();
+                Intent appStartIntent = pm.getLaunchIntentForPackage("com.android.chrome");
+                if (null != appStartIntent)
+                {
+                    getApplicationContext().startActivity(appStartIntent);
+                }
+            }
+            else if (s.equals("open gmail")) {
+                PackageManager pm = getApplicationContext().getPackageManager();
+                Intent appStartIntent = pm.getLaunchIntentForPackage("com.google.android.gm");
+                if (null != appStartIntent)
+                {
+                    getApplicationContext().startActivity(appStartIntent);
+                }
+            }
         }
 
     }
@@ -156,11 +180,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    @Override
-    public void onClick(View view) {
-        if (view == go) {
-            openIntent();
 
-           }
-        }
-    }
+}
